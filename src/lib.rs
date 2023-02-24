@@ -1,21 +1,24 @@
 #![forbid(unsafe_code)]
+#![allow(unused_macros)]
+#![allow(dead_code)]
+
 extern crate proc_macro;
-use proc_macro::TokenStream;
+
 
 fn generic_type_param(n: usize) -> String {
-    (0..=n).map(|i| format!("T{}, ", i)).collect::<String>()
+    (0..=n).map(|i| format!("T{i}, ")).collect::<String>()
 }
 
 fn from_tup_fn_ident(n: usize) -> String {
     (0..=n)
         .map(|i| format!(
-"            if let Ok(ok) = Self::try_from_int_str(tup.{i}) {{ ok }} else {{ return Err(TryFromTupErr({i})) }},\n", i = i))
+"            if let Ok(ok) = Self::try_from_int_str(tup.{i}) {{ ok }} else {{ return Err(TryFromTupErr({i})) }},\n"))
         .collect::<String>()
 }
 
 fn from_tup_type_bound(n: usize) -> String {
     (0..=n)
-        .map(|i| format!("TryFromIntStr<T{}> + ", i))
+        .map(|i| format!("TryFromIntStr<T{i}> + "))
         .collect::<String>()
 }
 
