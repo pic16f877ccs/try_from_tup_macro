@@ -1,0 +1,14 @@
+[package]
+name = "try_from_tup_macro"
+version = "0.1.0"
+edition = "2021"
+
+[lib]
+name = "try_from_tup_macro"
+proc-macro = true
+
+[dependencies]
+
+[features]
+try_from_tup_8 = []
+try_from_tup_16 = []
