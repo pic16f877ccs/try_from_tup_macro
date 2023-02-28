@@ -3,6 +3,7 @@
 #![allow(dead_code)]
 
 extern crate proc_macro;
+use proc_macro::TokenStream;
 
 
 fn generic_type_param(n: usize) -> String {
@@ -12,7 +13,10 @@ fn generic_type_param(n: usize) -> String {
 fn from_tup_fn_ident(n: usize) -> String {
     (0..=n)
         .map(|i| format!(
-"            if let Ok(ok) = Self::try_from_int_str(tup.{i}) {{ ok }} else {{ return Err(TryFromTupErr({i})) }},\n"))
+"              match Self::try_from_int_str(tup.{i}) {{
+                  Ok(ok) => ok,
+                  Err(err) => return Err(TryFromTupErr {{source: err, posice: {i}}}),
+               }},\n"))
         .collect::<String>()
 }
 
@@ -25,7 +29,7 @@ fn from_tup_type_bound(n: usize) -> String {
 #[rustfmt::skip]
 fn from_tup_trait_code(n: usize) -> String {
     (0..=n).map(|i| format!(
-"    #[doc = \"Converts tuple ({type_doc}) to array [Self; {i}].\"]
+"    #[doc = \"Converts tuple ({type_doc}) to array [Self; {i}], possible conversion error.\"]
     fn try_from_{i}<{type_param}>(tup: ({type_param})) -> Result<[Self; {i}], TryFromTupErr>
         where
              Self: {type_bound};
