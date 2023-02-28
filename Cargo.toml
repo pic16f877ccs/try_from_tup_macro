@@ -1,9 +1,8 @@
 [package]
 name = "try_from_tup_macro"
-version = "0.1.1"
+version = "0.1.2"
 edition = "2021"
 authors = ["Karl Wulfert <pic16f877.ccs@emailn.de>"]
-edition = "2021"
 readme = "README.md"
 repository = "https://github.com/pic16f877ccs/try_from_tup_macro"
 homepage = "https://github.com/pic16f877ccs/try_from_tup_macro"
