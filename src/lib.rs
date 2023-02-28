@@ -1,10 +1,10 @@
 #![forbid(unsafe_code)]
 #![allow(unused_macros)]
+#![allow(unused_imports)]
 #![allow(dead_code)]
 
 extern crate proc_macro;
 use proc_macro::TokenStream;
-
 
 fn generic_type_param(n: usize) -> String {
     (0..=n).map(|i| format!("T{i}, ")).collect::<String>()
@@ -13,10 +13,10 @@ fn generic_type_param(n: usize) -> String {
 fn from_tup_fn_ident(n: usize) -> String {
     (0..=n)
         .map(|i| format!(
-"              match Self::try_from_int_str(tup.{i}) {{
-                  Ok(ok) => ok,
-                  Err(err) => return Err(TryFromTupErr {{source: err, posice: {i}}}),
-               }},\n"))
+"            match Self::try_from_int_str(tup.{i}) {{
+                Ok(ok) => ok,
+                Err(err) => return Err(TryFromTupErr {{source: err, posice: {i}}}),
+            }},\n"))
         .collect::<String>()
 }
 
